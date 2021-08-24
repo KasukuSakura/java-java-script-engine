@@ -18,11 +18,13 @@ public class TestJavaJavaScriptEngine {
 
         engine.eval("System.out.println(\"OK\");");
 
-        ScriptException se = assertFailed(ScriptException.class, () -> {
-            engine.eval("throw new RuntimeException(\"Test\");");
-        });
-        Assertions.assertTrue(se.getCause() instanceof RuntimeException);
-        Assertions.assertEquals("Test", se.getCause().getMessage());
+        {
+            ScriptException se = assertFailed(ScriptException.class, () -> {
+                engine.eval("throw new RuntimeException(\"Test\");");
+            });
+            Assertions.assertTrue(se.getCause() instanceof RuntimeException);
+            Assertions.assertEquals("Test", se.getCause().getMessage());
+        }
 
         {
             var bindings = engine.createBindings();
@@ -33,10 +35,13 @@ public class TestJavaJavaScriptEngine {
             );
         }
 
-        assertFailed(ScriptException.class, () -> {
-            engine.eval("$$$ COMPILE  ERROR $$$");
-        }).printStackTrace(System.out);
-
+        {
+            ScriptException se = assertFailed(ScriptException.class, () -> {
+                engine.eval("$$$ COMPILE  ERROR $$$");
+            });
+            Assertions.assertTrue(se.getMessage().startsWith("Compile error:"), "Compile error message not match");
+            se.printStackTrace(System.out);
+        }
         engine.eval("""
                 import java.util.Collection;
                 /*!end-imports!*/
