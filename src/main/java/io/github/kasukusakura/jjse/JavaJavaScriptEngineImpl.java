@@ -84,20 +84,20 @@ class JavaJavaScriptEngineImpl extends AbstractScriptEngine {
 
 
             finallyCode.append("protected ")
-                    .append(hasReturnValue ? "Object" : "void")
-                    .append(" execute() throws Throwable {");
+                    .append(hasReturnValue ? "java.lang.Object" : "void")
+                    .append(" execute() throws java.lang.Throwable {");
             finallyCode.append(script, svs, script.length());
             finallyCode.append("}");
 
-            finallyCode.append("public Object call() throws java.lang.Exception {");
+            finallyCode.append("public java.lang.Object call() throws java.lang.Exception {");
 
             finallyCode
                     .append("try {")
                     .append(hasReturnValue ? "return execute();" : "execute(); return null;")
                     .append("} ");
-            finallyCode.append("catch (Exception e) { throw e; } ");
-            finallyCode.append("catch (Error e) { throw e; } ");
-            finallyCode.append("catch (Throwable e) { throw new java.lang.RuntimeException(e); } ");
+            finallyCode.append("catch (java.lang.Exception e) { throw e; } ");
+            finallyCode.append("catch (java.lang.Error e) { throw e; } ");
+            finallyCode.append("catch (java.lang.Throwable e) { throw new java.lang.RuntimeException(e); } ");
 
             finallyCode.append("}");
 
