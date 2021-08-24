@@ -8,9 +8,14 @@ import java.util.concurrent.Callable;
 
 @SuppressWarnings("unchecked")
 class JavaJavaScriptEngineImpl extends AbstractScriptEngine {
+    ScriptEngineFactory factory;
     JCompiler compiler;
 
-    JavaJavaScriptEngineImpl(JCompiler compiler) {
+    JavaJavaScriptEngineImpl(
+            ScriptEngineFactory factory,
+            JCompiler compiler
+    ) {
+        this.factory = factory;
         this.compiler = compiler;
     }
 
@@ -166,6 +171,6 @@ class JavaJavaScriptEngineImpl extends AbstractScriptEngine {
 
     @Override
     public ScriptEngineFactory getFactory() {
-        return null;
+        return factory;
     }
 }

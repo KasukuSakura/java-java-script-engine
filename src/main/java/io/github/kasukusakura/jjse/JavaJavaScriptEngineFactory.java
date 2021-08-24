@@ -80,10 +80,10 @@ public class JavaJavaScriptEngineFactory implements ScriptEngineFactory {
 
     @Override
     public ScriptEngine getScriptEngine() {
-        return new JavaJavaScriptEngineImpl(JCompiler.getCompiler(options));
+        return new JavaJavaScriptEngineImpl(this, JCompiler.getCompiler(options));
     }
 
     public ScriptEngine getScriptEngine(JCompiler compiler) {
-        return new JavaJavaScriptEngineImpl(compiler);
+        return new JavaJavaScriptEngineImpl(this, compiler);
     }
 }
