@@ -2,14 +2,12 @@ package io.github.kasukusakura.jjse;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
-import javax.tools.JavaCompiler;
-import javax.tools.ToolProvider;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class JavaJavaScriptEngineFactory implements ScriptEngineFactory {
-    static final JavaCompiler COMPILER = ToolProvider.getSystemJavaCompiler();
+    public static final String OPTIONS = "jjse.options";
+
+    private final Map<String, ?> options = new HashMap<>();
 
     @Override
     public String getEngineName() {
@@ -48,6 +46,20 @@ public class JavaJavaScriptEngineFactory implements ScriptEngineFactory {
 
     @Override
     public Object getParameter(String key) {
+        switch (key) {
+            case ScriptEngine.ENGINE:
+                return getEngineName();
+            case ScriptEngine.ENGINE_VERSION:
+                return getEngineVersion();
+            case ScriptEngine.LANGUAGE:
+                return getLanguageName();
+            case ScriptEngine.LANGUAGE_VERSION:
+                return getLanguageVersion();
+            case ScriptEngine.NAME:
+                return getNames();
+            case OPTIONS:
+                return options;
+        }
         return null;
     }
 
@@ -68,7 +80,7 @@ public class JavaJavaScriptEngineFactory implements ScriptEngineFactory {
 
     @Override
     public ScriptEngine getScriptEngine() {
-        return new JavaJavaScriptEngineImpl(JCompiler.getCompiler(Collections.emptyMap()));
+        return new JavaJavaScriptEngineImpl(JCompiler.getCompiler(options));
     }
 
     public ScriptEngine getScriptEngine(JCompiler compiler) {
